@@ -38,7 +38,7 @@ export interface PreviewWorkflow {
 }
 
 /**
- * IT Service Management workflow — Slack Trigger -> Agent (KB + Jira tools)
+ * IT Service Management workflow — Slack Trigger -> Agent (KB tool) -> Jira
  */
 const IT_SERVICE_WORKFLOW: PreviewWorkflow = {
   id: 'wf-it-service',
@@ -66,20 +66,30 @@ const IT_SERVICE_WORKFLOW: PreviewWorkflow = {
         { title: 'Model', value: 'claude-sonnet-4.6' },
         { title: 'System Prompt', value: 'Triage incoming IT...' },
       ],
-      tools: [
-        { name: 'Knowledge Base', type: 'knowledge_base', bgColor: '#10B981' },
-        { name: 'Jira', type: 'jira', bgColor: '#E0E0E0' },
+      tools: [{ name: 'Knowledge Base', type: 'knowledge_base', bgColor: '#10B981' }],
+      position: { x: 420, y: 40 },
+    },
+    {
+      id: 'jira-1',
+      name: 'Jira',
+      type: 'jira',
+      bgColor: '#E0E0E0',
+      rows: [
+        { title: 'Operation', value: 'Get Issues' },
+        { title: 'Project', value: 'IT-Support' },
       ],
-      position: { x: 420, y: 80 },
+      position: { x: 420, y: 260 },
       hideSourceHandle: true,
     },
   ],
-  edges: [{ id: 'e-1', source: 'slack-1', target: 'agent-1' }],
+  edges: [
+    { id: 'e-1', source: 'slack-1', target: 'agent-1' },
+    { id: 'e-2', source: 'slack-1', target: 'jira-1' },
+  ],
 }
 
 /**
  * Content pipeline workflow — Schedule -> Agent (X + YouTube tools)
- *                                     \-> Telegram
  */
 const CONTENT_PIPELINE_WORKFLOW: PreviewWorkflow = {
   id: 'wf-content-pipeline',
@@ -111,26 +121,11 @@ const CONTENT_PIPELINE_WORKFLOW: PreviewWorkflow = {
         { name: 'X', type: 'x', bgColor: '#000000' },
         { name: 'YouTube', type: 'youtube', bgColor: '#FF0000' },
       ],
-      position: { x: 420, y: 40 },
-      hideSourceHandle: true,
-    },
-    {
-      id: 'telegram-1',
-      name: 'Telegram',
-      type: 'telegram',
-      bgColor: '#E0E0E0',
-      rows: [
-        { title: 'Operation', value: 'Send Message' },
-        { title: 'Chat', value: '#content-updates' },
-      ],
-      position: { x: 420, y: 260 },
+      position: { x: 420, y: 180 },
       hideSourceHandle: true,
     },
   ],
-  edges: [
-    { id: 'e-3', source: 'schedule-1', target: 'agent-2' },
-    { id: 'e-4', source: 'schedule-1', target: 'telegram-1' },
-  ],
+  edges: [{ id: 'e-3', source: 'schedule-1', target: 'agent-2' }],
 }
 
 /**
