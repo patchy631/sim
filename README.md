@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://sim.ai" target="_blank" rel="noopener noreferrer">
-    <img src="apps/sim/public/logo/reverse/text/large.png" alt="Sim Logo" width="400"/>
+    <img src="apps/sim/public/logo/reverse/text/large.png" alt="Sim Logo" width="380"/>
   </a>
 </p>
 
